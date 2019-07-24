@@ -1,8 +1,7 @@
-﻿@model IEnumerable<Product>
+﻿@model ProductListModel
 @{
     ViewData["Title"] = "Index";
 }
-
 
 <section id="content">
 
@@ -24,9 +23,15 @@
 
                     </form>
                 </div>
-               @await Component.InvokeAsync("CategoryMenu")
-               @await Component.InvokeAsync("FeaturedProducts")
+
+                @await Component.InvokeAsync("CategoryMenu")
+
+                @await Component.InvokeAsync("FeaturedProducts")
+
+
             </div>
+            <!-- sidebar end -->
+            <!-- right column start -->
             <div class="col-md-9">
 
                 <div class="row">
@@ -35,18 +40,25 @@
                         <div class="row product-results">
                             <div class="product-results">
                                 <div class="col-xs-8">
-                                    <p class="woocommerce-result-count">There are @Model.Count() products</p>
+                                    <p class="woocommerce-result-count">
+                                        There are @Model.PagingInfo.TotalItems products
+                                    </p>
                                 </div>
                             </div>
                         </div>
                     </div>
 
+                    @foreach (var product in Model.Products)
+                    {
+                        @Html.Partial("_ProductItem", product)
+                    }
 
-                    @*foreach (var products in Model)
-                    { @Html.Partial("_ProductItem", product) }
-              *@  </div>
+                </div>
+
+                <div page-model="@Model.PagingInfo" page-action="List"></div>
 
             </div>
+            <!-- right column end -->
 
         </div>
 

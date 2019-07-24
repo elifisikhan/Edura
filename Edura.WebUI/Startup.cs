@@ -42,9 +42,15 @@ namespace Edura.WebUI
 
             app.UseStaticFiles();
             app.UseStatusCodePages();
+            
 
             app.UseMvc(routes =>
             {
+                routes.MapRoute(
+                    name: "Products",
+                    template:"products/{category?}",
+                    defaults: new {controller= "Products", action="List"});
+
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
